@@ -125,11 +125,11 @@ public class ParkingLot {
     }
 
     public void unparkVehicle(final Vehicle vehicle, final Payment paymentMode, final Integer exitID, final Integer parkingFloorID) {
-        ParkingFloor parkingFloor = parkingFloorList.get(parkingFloorID);
-        ParkingTicket parkingTicket = vehicle.getParkingTicket();
+        final ParkingFloor parkingFloor = parkingFloorList.get(parkingFloorID);
+        final ParkingTicket parkingTicket = vehicle.getParkingTicket();
 
         //get the amount
-        Double amount = calculateRate(parkingTicket, exitID);
+        final Double amount = calculateRate(parkingTicket, exitID);
 
         //make the payment
         makePaymentAtExit(paymentMode, amount);

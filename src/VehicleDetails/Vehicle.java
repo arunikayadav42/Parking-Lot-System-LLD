@@ -9,6 +9,10 @@ public abstract class Vehicle {
 
     private ParkingSpot parkingSpot;
 
+    public void setParkingSpot(ParkingSpot parkingSpot) {
+        this.parkingSpot = parkingSpot;
+    }
+
     private ParkingTicket parkingTicket;
 
     public String getLicenseNo() {

@@ -56,18 +56,19 @@ public class ParkingFloor {
         return new ParkingFloor(parkingFloorID, parkingFloorName);
     }
 
-    public Boolean assignVehicleToParkingSpot(final Vehicle vehicle) {
-        ParkingSpot parkingSpot = getFirstAvailableParkingSpot(vehicle);
+    public Boolean assignVehicleToParkingSpot(Vehicle vehicle) {
+        final ParkingSpot parkingSpot = getFirstAvailableParkingSpot(vehicle);
         if(parkingSpot == null) {
             System.out.println("Sorry, no slots on this floor");
             return false;
         }
         parkingSpot.parkVehicle(vehicle);
+        vehicle.setParkingSpot(parkingSpot);
         return true;
     }
 
     private ParkingSpot getFirstAvailableParkingSpot(final Vehicle vehicle) {
-        if(vehicle instanceof Car ||vehicle instanceof Van) {
+        if(vehicle instanceof Car || vehicle instanceof Van) {
             for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
                 if(compactSpotList.get(i).isAvailable()) {
                     compactSpotOccupiedCount++;
@@ -102,9 +103,9 @@ public class ParkingFloor {
 
     public Boolean removeVehicleFromParkingSpot(final Vehicle vehicle) {
 
-        ParkingSpot parkingSpot = vehicle.getParkingSpot();
+        final ParkingSpot parkingSpot = vehicle.getParkingSpot();
 
-        if(vehicle instanceof Car ||vehicle instanceof Van) {
+        if(vehicle instanceof Car || vehicle instanceof Van) {
             compactSpotOccupiedCount--;
         } else if(vehicle instanceof Motorcycle) {
             motorcycleSpotOccupiedCount--;
@@ -120,10 +121,10 @@ public class ParkingFloor {
     public void display() {
         StringBuilder message = new StringBuilder();
         message.append("PARKING SPOT TYPE             |         Available         |         Total      \n");
-        message.append(String.format("COMPACT PARKING SPOTS         |         {}               |          {}\n", compactSpotOccupiedCount, TOTAL_COMPACT_SLOTS));
-        message.append(String.format("HANDICAP PARKING SPOTS        |         {}               |          {}\n", handicapSpotOccupiedCount, TOTAL_HANDICAP_SLOTS));
-        message.append(String.format("LARGE PARKING SPOTS           |         {}               |          {}\n", largeSpotOccupiedCount, TOTAL_LARGE_SLOTS));
-        message.append(String.format("MOTORCYCLE PARKING SPOTS      |         {}               |          {}\n", motorcycleSpotOccupiedCount, TOTAL_MOTORCYCLE_SLOTS));
+        message.append(String.format("COMPACT PARKING SPOTS         |         %d              |          %d\n", TOTAL_COMPACT_SLOTS-compactSpotOccupiedCount, TOTAL_COMPACT_SLOTS));
+        message.append(String.format("HANDICAP PARKING SPOTS        |         %d               |          %d\n", TOTAL_HANDICAP_SLOTS-handicapSpotOccupiedCount, TOTAL_HANDICAP_SLOTS));
+        message.append(String.format("LARGE PARKING SPOTS           |         %d               |          %d\n", TOTAL_LARGE_SLOTS-largeSpotOccupiedCount, TOTAL_LARGE_SLOTS));
+        message.append(String.format("MOTORCYCLE PARKING SPOTS      |         %d               |          %d\n", TOTAL_MOTORCYCLE_SLOTS-motorcycleSpotOccupiedCount, TOTAL_MOTORCYCLE_SLOTS));
         displayBoard.display(message.toString());
     }
 

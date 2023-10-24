@@ -26,6 +26,7 @@ public class CommandExecutor {
 
         Vehicle vehicle = new Car("UP78 1234", "BLUE");
         parkingLot.parkVehicle(0, 0, vehicle);
+        parkingLot.display(0);
         parkingLot.unparkVehicle(vehicle, new Cash(), 0, 0);
     }
 }
