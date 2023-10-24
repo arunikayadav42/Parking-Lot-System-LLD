@@ -17,7 +17,7 @@ public class ParkingTicket {
 
     private Vehicle vehicle;
 
-    public ParkingTicket(Integer ticketID) {
+    public ParkingTicket(final Integer ticketID) {
         this.ticketID = ticketID;
     }
 
@@ -25,7 +25,7 @@ public class ParkingTicket {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(final Timestamp startTime) {
         this.startTime = startTime;
     }
 
@@ -33,7 +33,7 @@ public class ParkingTicket {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(final Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -41,7 +41,7 @@ public class ParkingTicket {
         return payment;
     }
 
-    public void setPayment(Payment payment) {
+    public void setPayment(final Payment payment) {
         this.payment = payment;
     }
 
@@ -49,7 +49,7 @@ public class ParkingTicket {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(final Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 

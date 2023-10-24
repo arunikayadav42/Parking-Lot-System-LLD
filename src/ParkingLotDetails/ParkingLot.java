@@ -1,7 +1,8 @@
 package ParkingLotDetails;
 
+import ParkingFloor.Entrance;
+import ParkingFloor.Exit;
 import ParkingFloor.ParkingFloor;
-import ParkingFloor.*;
 import ParkingSpotDetails.ParkingSpot;
 import PaymentDetails.Payment;
 import VehicleDetails.Vehicle;
@@ -16,7 +17,6 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -70,7 +70,7 @@ public class ParkingLot {
         return parkingLot;
     }
 
-    public Boolean addParkingFloors(Integer parkingFloorID, String parkingFloorName) {
+    public Boolean addParkingFloors(final Integer parkingFloorID, final String parkingFloorName) {
         ParkingFloor parkingFloor = ParkingFloor.addParkingFloor(parkingFloorID, parkingFloorName);
         parkingFloorList.add(parkingFloor);
         return true;
@@ -84,10 +84,10 @@ public class ParkingLot {
         exitHashMap.put(counterForExitID++, new Exit(counterForExitID));
     }
 
-    public Boolean parkVehicle(Integer entranceID, Integer parkingFloorID, Vehicle vehicle) {
-        ParkingTicket parkingTicket = getParkingTicketAtEntrance(entranceID);
+    public Boolean parkVehicle(final Integer entranceID, final Integer parkingFloorID, final Vehicle vehicle) {
+        final ParkingTicket parkingTicket = getParkingTicketAtEntrance(entranceID);
 
-        Boolean vehicleParked = assignVehicleToParkingSpot(parkingFloorID, vehicle);
+        final Boolean vehicleParked = assignVehicleToParkingSpot(parkingFloorID, vehicle);
 
         if(vehicleParked == false)
             return false;
@@ -104,12 +104,12 @@ public class ParkingLot {
         return entrance.getParkingTicket(Counter.counter);
     }
 
-    private void assignParkingTicketToVehicle(Vehicle vehicle, ParkingTicket parkingTicket) {
+    private void assignParkingTicketToVehicle(final Vehicle vehicle, final ParkingTicket parkingTicket) {
         //assign parking ticket to vehicle
         vehicle.assignTicket(parkingTicket);
     }
 
-    private Boolean assignVehicleToParkingSpot(Integer parkingFloorID, Vehicle vehicle) {
+    private Boolean assignVehicleToParkingSpot(final Integer parkingFloorID, final Vehicle vehicle) {
         if(parkingFloorList.size()-1 < parkingFloorID)
             {
                 System.out.println("Parking Lot does not contain a parking at this level, please enter a valid level");
@@ -124,7 +124,7 @@ public class ParkingLot {
         return true;
     }
 
-    public void unparkVehicle(Vehicle vehicle, Payment paymentMode, Integer exitID, Integer parkingFloorID) {
+    public void unparkVehicle(final Vehicle vehicle, final Payment paymentMode, final Integer exitID, final Integer parkingFloorID) {
         ParkingFloor parkingFloor = parkingFloorList.get(parkingFloorID);
         ParkingTicket parkingTicket = vehicle.getParkingTicket();
 
@@ -138,7 +138,7 @@ public class ParkingLot {
         removeVehicleFromParkingSpot(vehicle, parkingFloor);
     }
 
-    private Double calculateRate(ParkingTicket parkingTicket, Integer exitID) {
+    private Double calculateRate(final ParkingTicket parkingTicket, final Integer exitID) {
         //set the end time of the parking ticket
         parkingTicket.setEndTime(new Timestamp(LocalTime.now().toEpochSecond(LocalDate.now(), ZoneOffset.UTC)));
 
@@ -147,11 +147,11 @@ public class ParkingLot {
         return exit.calculateRate(parkingTicket);
     }
 
-    private void makePaymentAtExit(Payment paymentMode, Double amount) {
+    private void makePaymentAtExit(final Payment paymentMode, final Double amount) {
         paymentMode.makePayment(amount);
     }
 
-    private Boolean removeVehicleFromParkingSpot(Vehicle vehicle, ParkingFloor parkingFloor) {
+    private Boolean removeVehicleFromParkingSpot(final Vehicle vehicle, final ParkingFloor parkingFloor) {
         ParkingSpot occupiedParkingSpot = vehicle.getParkingSpot();
         occupiedParkingSpot.unparkVehicle();
         parkingFloor.removeVehicleFromParkingSpot(vehicle);
@@ -159,7 +159,7 @@ public class ParkingLot {
         return true;
     }
 
-    public void display(Integer parkingFloorID) {
+    public void display(final Integer parkingFloorID) {
         parkingFloorList.get(parkingFloorID).display();
     }
 }

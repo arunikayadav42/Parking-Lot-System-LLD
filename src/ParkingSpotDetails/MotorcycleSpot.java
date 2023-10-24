@@ -8,12 +8,12 @@ public class MotorcycleSpot extends ParkingSpot{
 
     private UUID id;
 
-    public MotorcycleSpot(UUID uid) {
+    public MotorcycleSpot(final UUID uid) {
         this.id = uid;
     }
 
     @Override
-    public boolean parkVehicle(Vehicle incomingVehicle) {
+    public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;
     }

@@ -19,7 +19,7 @@ public abstract class Vehicle {
         return parkingTicket;
     }
 
-    public void setParkingTicket(ParkingTicket parkingTicket) {
+    public void setParkingTicket(final ParkingTicket parkingTicket) {
         this.parkingTicket = parkingTicket;
     }
 
@@ -31,9 +31,9 @@ public abstract class Vehicle {
         return parkingSpot;
     }
 
-    public Vehicle(String licenseNo, String colour) {
+    public Vehicle(final String licenseNo, final String colour) {
         this.licenseNo = licenseNo;
         this.colour = colour;
     }
-    public abstract boolean assignTicket(ParkingTicket parkingTicket);
+    public abstract boolean assignTicket(final ParkingTicket parkingTicket);
 }

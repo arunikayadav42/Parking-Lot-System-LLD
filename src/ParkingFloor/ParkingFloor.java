@@ -1,16 +1,25 @@
 package ParkingFloor;
 
 import ParkingLotDetails.DisplayBoard;
-import ParkingSpotDetails.*;
-import VehicleDetails.*;
-import utils.Constants;
+import ParkingSpotDetails.CompactSpotFactory;
+import ParkingSpotDetails.HandicapSpotFactory;
+import ParkingSpotDetails.LargeSpotFactory;
+import ParkingSpotDetails.MotorcycleSpotFactory;
+import ParkingSpotDetails.ParkingSpot;
+import VehicleDetails.Car;
+import VehicleDetails.Motorcycle;
+import VehicleDetails.Truck;
+import VehicleDetails.Van;
+import VehicleDetails.Vehicle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import static utils.Constants.*;
+import static utils.Constants.TOTAL_COMPACT_SLOTS;
+import static utils.Constants.TOTAL_HANDICAP_SLOTS;
+import static utils.Constants.TOTAL_LARGE_SLOTS;
+import static utils.Constants.TOTAL_MOTORCYCLE_SLOTS;
 
 public class ParkingFloor {
     private Integer parkingFloorID;
@@ -33,42 +42,21 @@ public class ParkingFloor {
         this.parkingFloorID = id;
         this.parkingFloorName = name;
         this.displayBoard = new DisplayBoard(this);
-        this.compactSpotList = new ArrayList<>();
-        this.handicapSpotList = new ArrayList<>();
-        this.largeSpotList = new ArrayList<>();
-        this.motorcycleSpotList = new ArrayList<>();
+        this.compactSpotList = new ArrayList<>(Collections.nCopies(TOTAL_COMPACT_SLOTS, new CompactSpotFactory().create()));
+        this.handicapSpotList = new ArrayList<>(Collections.nCopies(TOTAL_HANDICAP_SLOTS, new HandicapSpotFactory().create()));
+        this.largeSpotList = new ArrayList<>(Collections.nCopies(TOTAL_LARGE_SLOTS, new LargeSpotFactory().create()));
+        this.motorcycleSpotList = new ArrayList<>(Collections.nCopies(TOTAL_MOTORCYCLE_SLOTS, new MotorcycleSpotFactory().create()));
         compactSpotOccupiedCount = 0;
         handicapSpotOccupiedCount = 0;
         largeSpotOccupiedCount = 0;
         motorcycleSpotOccupiedCount = 0;
-        createSlots();
     }
 
-    private void createSlots() {
-        //assuming each floor has 100 parking spots - dividng them equally so, 25 spots of each kind
-        for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
-            compactSpotList.add(new CompactSpotFactory().create());
-        }
-
-        for(int j = 0; j < TOTAL_HANDICAP_SLOTS; j++) {
-            handicapSpotList.add(new HandicapSpotFactory().create());
-        }
-
-        for(int i = 0; i < TOTAL_LARGE_SLOTS; i++) {
-            largeSpotList.add(new LargeSpotFactory().create());
-        }
-
-        for(int i = 0; i < TOTAL_MOTORCYCLE_SLOTS; i++) {
-            motorcycleSpotList.add(new MotorcycleSpotFactory().create());
-        }
-    }
-
-
-    public static ParkingFloor addParkingFloor(Integer parkingFloorID, String parkingFloorName) {
+    public static ParkingFloor addParkingFloor(final Integer parkingFloorID, final String parkingFloorName) {
         return new ParkingFloor(parkingFloorID, parkingFloorName);
     }
 
-    public Boolean assignVehicleToParkingSpot(Vehicle vehicle) {
+    public Boolean assignVehicleToParkingSpot(final Vehicle vehicle) {
         ParkingSpot parkingSpot = getFirstAvailableParkingSpot(vehicle);
         if(parkingSpot == null) {
             System.out.println("Sorry, no slots on this floor");
@@ -78,7 +66,7 @@ public class ParkingFloor {
         return true;
     }
 
-    private ParkingSpot getFirstAvailableParkingSpot(Vehicle vehicle) {
+    private ParkingSpot getFirstAvailableParkingSpot(final Vehicle vehicle) {
         if(vehicle instanceof Car ||vehicle instanceof Van) {
             for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
                 if(compactSpotList.get(i).isAvailable()) {
@@ -112,7 +100,7 @@ public class ParkingFloor {
         return null;
     }
 
-    public Boolean removeVehicleFromParkingSpot(Vehicle vehicle) {
+    public Boolean removeVehicleFromParkingSpot(final Vehicle vehicle) {
 
         ParkingSpot parkingSpot = vehicle.getParkingSpot();
 
@@ -132,10 +120,10 @@ public class ParkingFloor {
     public void display() {
         StringBuilder message = new StringBuilder();
         message.append("PARKING SPOT TYPE             |         Available         |         Total      \n");
-        message.append(String.format("COMPACT PARKING SPOTS         |         {0}               |          {1}\n", compactSpotOccupiedCount, TOTAL_COMPACT_SLOTS));
-        message.append(String.format("HANDICAP PARKING SPOTS        |         {0}               |          {1}\n", handicapSpotOccupiedCount, TOTAL_HANDICAP_SLOTS));
-        message.append(String.format("LARGE PARKING SPOTS           |         {0}               |          {1}\n", largeSpotOccupiedCount, TOTAL_LARGE_SLOTS));
-        message.append(String.format("MOTORCYCLE PARKING SPOTS      |         {0}               |          {1}\n", motorcycleSpotOccupiedCount, TOTAL_MOTORCYCLE_SLOTS));
+        message.append(String.format("COMPACT PARKING SPOTS         |         {}               |          {}\n", compactSpotOccupiedCount, TOTAL_COMPACT_SLOTS));
+        message.append(String.format("HANDICAP PARKING SPOTS        |         {}               |          {}\n", handicapSpotOccupiedCount, TOTAL_HANDICAP_SLOTS));
+        message.append(String.format("LARGE PARKING SPOTS           |         {}               |          {}\n", largeSpotOccupiedCount, TOTAL_LARGE_SLOTS));
+        message.append(String.format("MOTORCYCLE PARKING SPOTS      |         {}               |          {}\n", motorcycleSpotOccupiedCount, TOTAL_MOTORCYCLE_SLOTS));
         displayBoard.display(message.toString());
     }
 

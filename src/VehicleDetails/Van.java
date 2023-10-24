@@ -8,12 +8,12 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 
 public class Van extends Vehicle{
-    public Van(String license, String colour) {
+    public Van(final String license, final String colour) {
         super(license, colour);
     }
 
     @Override
-    public boolean assignTicket(ParkingTicket parkingTicket) {
+    public boolean assignTicket(final ParkingTicket parkingTicket) {
         parkingTicket.setStartTime(new Timestamp(LocalTime.now().toEpochSecond(LocalDate.now(), ZoneOffset.UTC)));
         parkingTicket.setVehicle(this);
         this.setParkingTicket(parkingTicket);

@@ -9,5 +9,5 @@ public abstract class ParkingSpotFactory {
         return parkingSpot;
     }
 
-    protected abstract ParkingSpot createParkingSpot(UUID uid);
+    protected abstract ParkingSpot createParkingSpot(final UUID uid);
 }

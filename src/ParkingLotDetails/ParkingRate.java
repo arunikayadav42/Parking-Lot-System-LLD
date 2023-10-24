@@ -6,7 +6,7 @@ public class ParkingRate {
     public ParkingRate(Double rate) {
         this.rate = rate;
     }
-    public Double calculateRate(Integer time) {
+    public Double calculateRate(final Integer time) {
         return rate*time;
     }
 }

@@ -13,7 +13,7 @@ public class CompactSpot extends ParkingSpot{
     }
 
     @Override
-    public boolean parkVehicle(Vehicle incomingVehicle) {
+    public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;
     }

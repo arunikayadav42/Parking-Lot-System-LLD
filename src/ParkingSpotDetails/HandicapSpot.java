@@ -8,12 +8,12 @@ public class HandicapSpot extends ParkingSpot{
 
     private UUID id;
 
-    public HandicapSpot(UUID uid) {
+    public HandicapSpot(final UUID uid) {
         this.id = uid;
     }
 
     @Override
-    public boolean parkVehicle(Vehicle incomingVehicle) {
+    public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;
     }

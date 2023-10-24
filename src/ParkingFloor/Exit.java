@@ -14,7 +14,7 @@ public class Exit {
         parkingRate = new ParkingRate(Constants.PARKING_RATE);
     }
 
-    public double calculateRate(ParkingTicket parkingTicket) {
+    public double calculateRate(final ParkingTicket parkingTicket) {
         return parkingRate.calculateRate(parkingTicket.getEndTime().getNanos() - parkingTicket.getStartTime().getNanos());
     }
 }
