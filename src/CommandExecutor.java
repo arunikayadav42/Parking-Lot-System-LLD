@@ -28,5 +28,7 @@ public class CommandExecutor {
         parkingLot.parkVehicle(0, 0, vehicle);
         parkingLot.display(0);
         parkingLot.unparkVehicle(vehicle, new Cash(), 0, 0);
+        System.out.println("Vehicle unparked\n");
+        parkingLot.display(0);
     }
 }

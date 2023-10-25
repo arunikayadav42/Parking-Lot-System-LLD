@@ -1,6 +1,8 @@
 package VehicleDetails;
 
 import ParkingLotDetails.ParkingTicket;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleVisitor;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -8,8 +10,19 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 
 public class Van extends Vehicle{
+
     public Van(final String license, final String colour) {
         super(license, colour);
+    }
+
+    @Override
+    public void accept(VehicleVisitor vehicleVisitor) {
+        vehicleVisitor.visit(this);
+    }
+
+    @Override
+    public void accept(VehicleDispatchVisior vehicleDispatchVisior) {
+        vehicleDispatchVisior.visit(this);
     }
 
     @Override

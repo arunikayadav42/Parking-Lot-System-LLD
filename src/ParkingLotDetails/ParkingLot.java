@@ -152,11 +152,7 @@ public class ParkingLot {
     }
 
     private Boolean removeVehicleFromParkingSpot(final Vehicle vehicle, final ParkingFloor parkingFloor) {
-        ParkingSpot occupiedParkingSpot = vehicle.getParkingSpot();
-        occupiedParkingSpot.unparkVehicle();
-        parkingFloor.removeVehicleFromParkingSpot(vehicle);
-
-        return true;
+        return parkingFloor.removeVehicleFromParkingSpot(vehicle);
     }
 
     public void display(final Integer parkingFloorID) {

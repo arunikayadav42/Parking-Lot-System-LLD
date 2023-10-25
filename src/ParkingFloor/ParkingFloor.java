@@ -6,11 +6,11 @@ import ParkingSpotDetails.HandicapSpotFactory;
 import ParkingSpotDetails.LargeSpotFactory;
 import ParkingSpotDetails.MotorcycleSpotFactory;
 import ParkingSpotDetails.ParkingSpot;
-import VehicleDetails.Car;
-import VehicleDetails.Motorcycle;
-import VehicleDetails.Truck;
-import VehicleDetails.Van;
 import VehicleDetails.Vehicle;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisitorImpl;
+import VehicleDetails.VisitorPattern.VehicleVisitor;
+import VehicleDetails.VisitorPattern.VehicleVisitorImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +38,9 @@ public class ParkingFloor {
 
     private DisplayBoard displayBoard;
 
+    private VehicleVisitor vehicleVisitor;
+    private VehicleDispatchVisior vehicleDispatchVisior;
+
     public ParkingFloor(Integer id, String name) {
         this.parkingFloorID = id;
         this.parkingFloorName = name;
@@ -50,6 +53,8 @@ public class ParkingFloor {
         handicapSpotOccupiedCount = 0;
         largeSpotOccupiedCount = 0;
         motorcycleSpotOccupiedCount = 0;
+        vehicleVisitor = new VehicleVisitorImpl(this);
+        vehicleDispatchVisior = new VehicleDispatchVisitorImpl(this);
     }
 
     public static ParkingFloor addParkingFloor(final Integer parkingFloorID, final String parkingFloorName) {
@@ -57,61 +62,76 @@ public class ParkingFloor {
     }
 
     public Boolean assignVehicleToParkingSpot(Vehicle vehicle) {
-        final ParkingSpot parkingSpot = getFirstAvailableParkingSpot(vehicle);
-        if(parkingSpot == null) {
-            System.out.println("Sorry, no slots on this floor");
-            return false;
-        }
-        parkingSpot.parkVehicle(vehicle);
-        vehicle.setParkingSpot(parkingSpot);
+        vehicle.accept(vehicleVisitor);
         return true;
     }
 
-    private ParkingSpot getFirstAvailableParkingSpot(final Vehicle vehicle) {
-        if(vehicle instanceof Car || vehicle instanceof Van) {
-            for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
-                if(compactSpotList.get(i).isAvailable()) {
-                    compactSpotOccupiedCount++;
-                    return compactSpotList.get(i);
-                }
-            }
-//        } else if(vehicle instanceof Motorcycle) {
-//            for(int i = 0; i < TOTAL_HANDICAP_SLOTS; i++) {
-//                if(handicapSpotList.get(i).isAvailable()) {
-//                    handicapSpotOccupiedCount++;
-//                    return handicapSpotList.get(i);
-//                }
-//            }
-        } else if(vehicle instanceof Truck) {
-            for(int i = 0; i < TOTAL_LARGE_SLOTS; i++) {
-                if(largeSpotList.get(i).isAvailable()) {
-                    largeSpotOccupiedCount++;
-                    return largeSpotList.get(i);
-                }
-            }
-        }   else if(vehicle instanceof Motorcycle) {
-            for(int i = 0; i < TOTAL_MOTORCYCLE_SLOTS; i++) {
-                if(motorcycleSpotList.get(i).isAvailable()) {
-                    motorcycleSpotOccupiedCount++;
-                    return motorcycleSpotList.get(i);
-                }
+
+    public void addCompactParkingSpot(Vehicle vehicle) {
+        for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
+            ParkingSpot parkingSpot = compactSpotList.get(i);
+            if(parkingSpot.isAvailable()) {
+                compactSpotOccupiedCount++;
+                parkingSpot.parkVehicle(vehicle);
+                vehicle.setParkingSpot(parkingSpot);
             }
         }
+    }
 
-        return null;
+    public void addMotorcyleParkingSpot(Vehicle vehicle) {
+        for(int i = 0; i < TOTAL_MOTORCYCLE_SLOTS; i++) {
+            ParkingSpot parkingSpot = motorcycleSpotList.get(i);
+            if(parkingSpot.isAvailable()) {
+                motorcycleSpotOccupiedCount++;
+                parkingSpot.parkVehicle(vehicle);
+                vehicle.setParkingSpot(parkingSpot);
+            }
+        }
+    }
+
+    public void addLargeParkingSpot(Vehicle vehicle) {
+        for(int i = 0; i < TOTAL_LARGE_SLOTS; i++) {
+            ParkingSpot parkingSpot = largeSpotList.get(i);
+            if(parkingSpot.isAvailable()) {
+                largeSpotOccupiedCount++;
+                parkingSpot.parkVehicle(vehicle);
+                vehicle.setParkingSpot(parkingSpot);
+            }
+        }
+    }
+
+    public void addHandicapParkingSpot(Vehicle vehicle) {
+        for(int i = 0; i < TOTAL_HANDICAP_SLOTS; i++) {
+                ParkingSpot parkingSpot = handicapSpotList.get(i);
+                if(parkingSpot.isAvailable()) {
+                    handicapSpotOccupiedCount++;
+                    parkingSpot.parkVehicle(vehicle);
+                    vehicle.setParkingSpot(parkingSpot);
+                }
+            }
+    }
+
+    public void removeVehicleFromCompactSpot() {
+        compactSpotOccupiedCount--;
+    }
+
+    public void removeVehicleFromMotorcycleSpot() {
+        motorcycleSpotOccupiedCount--;
+    }
+
+    public void removeVehicleFromLargeSpot() {
+        largeSpotOccupiedCount--;
+    }
+
+    public void removeVehicleFromHandicapSpot() {
+        handicapSpotOccupiedCount--;
     }
 
     public Boolean removeVehicleFromParkingSpot(final Vehicle vehicle) {
 
         final ParkingSpot parkingSpot = vehicle.getParkingSpot();
 
-        if(vehicle instanceof Car || vehicle instanceof Van) {
-            compactSpotOccupiedCount--;
-        } else if(vehicle instanceof Motorcycle) {
-            motorcycleSpotOccupiedCount--;
-        } else if(vehicle instanceof Truck) {
-            largeSpotOccupiedCount--;
-        }
+        vehicle.accept(vehicleDispatchVisior);
 
         parkingSpot.unparkVehicle();
 

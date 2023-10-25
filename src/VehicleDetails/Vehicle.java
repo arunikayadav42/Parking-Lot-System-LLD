@@ -2,12 +2,18 @@ package VehicleDetails;
 
 import ParkingLotDetails.ParkingTicket;
 import ParkingSpotDetails.ParkingSpot;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleVisitor;
 
 public abstract class Vehicle {
     private String licenseNo;
     private String colour;
 
     private ParkingSpot parkingSpot;
+
+    public abstract void accept(VehicleVisitor vehicleVisitor);
+
+    public abstract void accept(VehicleDispatchVisior vehicleDispatchVisior);
 
     public void setParkingSpot(ParkingSpot parkingSpot) {
         this.parkingSpot = parkingSpot;
