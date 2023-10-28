@@ -1,7 +1,7 @@
 package VehicleDetails;
 
 import ParkingLotDetails.ParkingTicket;
-import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisitor;
 import VehicleDetails.VisitorPattern.VehicleVisitor;
 
 import java.sql.Timestamp;
@@ -16,8 +16,8 @@ public class Motorcycle extends Vehicle{
     }
 
     @Override
-    public void accept(final VehicleDispatchVisior vehicleDispatchVisior) {
-        vehicleDispatchVisior.visit(this);
+    public void accept(final VehicleDispatchVisitor vehicleDispatchVisitor) {
+        vehicleDispatchVisitor.visit(this);
     }
 
     public Motorcycle(final String license, final String colour) {

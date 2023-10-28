@@ -6,7 +6,7 @@ import VehicleDetails.Motorcycle;
 import VehicleDetails.Truck;
 import VehicleDetails.Van;
 
-public class VehicleDispatchVisitorImpl implements VehicleDispatchVisior{
+public class VehicleDispatchVisitorImpl implements VehicleDispatchVisitor {
 
     private final ParkingFloor parkingFloor;
 

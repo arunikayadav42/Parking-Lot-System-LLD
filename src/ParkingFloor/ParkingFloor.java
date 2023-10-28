@@ -7,7 +7,7 @@ import ParkingSpotDetails.LargeSpotFactory;
 import ParkingSpotDetails.MotorcycleSpotFactory;
 import ParkingSpotDetails.ParkingSpot;
 import VehicleDetails.Vehicle;
-import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisitor;
 import VehicleDetails.VisitorPattern.VehicleDispatchVisitorImpl;
 import VehicleDetails.VisitorPattern.VehicleVisitor;
 import VehicleDetails.VisitorPattern.VehicleVisitorImpl;
@@ -39,7 +39,7 @@ public class ParkingFloor {
     private DisplayBoard displayBoard;
 
     private VehicleVisitor vehicleVisitor;
-    private VehicleDispatchVisior vehicleDispatchVisior;
+    private VehicleDispatchVisitor vehicleDispatchVisitor;
 
     public ParkingFloor(final Integer id, final String name) {
         this.parkingFloorID = id;
@@ -54,7 +54,7 @@ public class ParkingFloor {
         largeSpotOccupiedCount = 0;
         motorcycleSpotOccupiedCount = 0;
         vehicleVisitor = new VehicleVisitorImpl(this);
-        vehicleDispatchVisior = new VehicleDispatchVisitorImpl(this);
+        vehicleDispatchVisitor = new VehicleDispatchVisitorImpl(this);
     }
 
     public static ParkingFloor addParkingFloor(final Integer parkingFloorID, final String parkingFloorName) {
@@ -115,7 +115,7 @@ public class ParkingFloor {
 
         final ParkingSpot parkingSpot = vehicle.getParkingSpot();
 
-        vehicle.accept(vehicleDispatchVisior);
+        vehicle.accept(vehicleDispatchVisitor);
 
         parkingSpot.unparkVehicle();
 

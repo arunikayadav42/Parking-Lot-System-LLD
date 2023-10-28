@@ -2,7 +2,7 @@ package VehicleDetails;
 
 import ParkingLotDetails.ParkingTicket;
 import ParkingSpotDetails.ParkingSpot;
-import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisitor;
 import VehicleDetails.VisitorPattern.VehicleVisitor;
 
 public abstract class Vehicle {
@@ -13,7 +13,7 @@ public abstract class Vehicle {
 
     public abstract void accept(final VehicleVisitor vehicleVisitor);
 
-    public abstract void accept(final VehicleDispatchVisior vehicleDispatchVisior);
+    public abstract void accept(final VehicleDispatchVisitor vehicleDispatchVisitor);
 
     public void setParkingSpot(final ParkingSpot parkingSpot) {
         this.parkingSpot = parkingSpot;

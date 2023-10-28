@@ -1,7 +1,7 @@
 package VehicleDetails;
 
 import ParkingLotDetails.ParkingTicket;
-import VehicleDetails.VisitorPattern.VehicleDispatchVisior;
+import VehicleDetails.VisitorPattern.VehicleDispatchVisitor;
 import VehicleDetails.VisitorPattern.VehicleVisitor;
 
 public class Car extends Vehicle {
@@ -12,8 +12,8 @@ public class Car extends Vehicle {
     }
 
     @Override
-    public void accept(final VehicleDispatchVisior vehicleDispatchVisior) {
-        vehicleDispatchVisior.visit(this);
+    public void accept(final VehicleDispatchVisitor vehicleDispatchVisitor) {
+        vehicleDispatchVisitor.visit(this);
     }
 
     public Car(final String license, final String colour) {

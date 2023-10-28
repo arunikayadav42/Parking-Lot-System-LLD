@@ -5,7 +5,7 @@ import VehicleDetails.Motorcycle;
 import VehicleDetails.Truck;
 import VehicleDetails.Van;
 
-public interface VehicleDispatchVisior {
+public interface VehicleDispatchVisitor {
     void visit(Car car);
 
     void visit(Truck truck);
