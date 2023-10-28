@@ -41,7 +41,7 @@ public class ParkingFloor {
     private VehicleVisitor vehicleVisitor;
     private VehicleDispatchVisior vehicleDispatchVisior;
 
-    public ParkingFloor(Integer id, String name) {
+    public ParkingFloor(final Integer id, final String name) {
         this.parkingFloorID = id;
         this.parkingFloorName = name;
         this.displayBoard = new DisplayBoard(this);
@@ -61,13 +61,13 @@ public class ParkingFloor {
         return new ParkingFloor(parkingFloorID, parkingFloorName);
     }
 
-    public Boolean assignVehicleToParkingSpot(Vehicle vehicle) {
+    public Boolean assignVehicleToParkingSpot(final Vehicle vehicle) {
         vehicle.accept(vehicleVisitor);
         return true;
     }
 
 
-    public void addCompactParkingSpot(Vehicle vehicle) {
+    public void addCompactParkingSpot(final Vehicle vehicle) {
         for(int i = 0; i < TOTAL_COMPACT_SLOTS; i++) {
             ParkingSpot parkingSpot = compactSpotList.get(i);
             if(parkingSpot.isAvailable()) {
@@ -78,7 +78,7 @@ public class ParkingFloor {
         }
     }
 
-    public void addMotorcyleParkingSpot(Vehicle vehicle) {
+    public void addMotorcyleParkingSpot(final Vehicle vehicle) {
         for(int i = 0; i < TOTAL_MOTORCYCLE_SLOTS; i++) {
             ParkingSpot parkingSpot = motorcycleSpotList.get(i);
             if(parkingSpot.isAvailable()) {
@@ -89,7 +89,7 @@ public class ParkingFloor {
         }
     }
 
-    public void addLargeParkingSpot(Vehicle vehicle) {
+    public void addLargeParkingSpot(final Vehicle vehicle) {
         for(int i = 0; i < TOTAL_LARGE_SLOTS; i++) {
             ParkingSpot parkingSpot = largeSpotList.get(i);
             if(parkingSpot.isAvailable()) {
@@ -100,7 +100,7 @@ public class ParkingFloor {
         }
     }
 
-    public void addHandicapParkingSpot(Vehicle vehicle) {
+    public void addHandicapParkingSpot(final Vehicle vehicle) {
         for(int i = 0; i < TOTAL_HANDICAP_SLOTS; i++) {
                 ParkingSpot parkingSpot = handicapSpotList.get(i);
                 if(parkingSpot.isAvailable()) {
@@ -109,6 +109,17 @@ public class ParkingFloor {
                     vehicle.setParkingSpot(parkingSpot);
                 }
             }
+    }
+
+    public Boolean removeVehicleFromParkingSpot(final Vehicle vehicle) {
+
+        final ParkingSpot parkingSpot = vehicle.getParkingSpot();
+
+        vehicle.accept(vehicleDispatchVisior);
+
+        parkingSpot.unparkVehicle();
+
+        return null;
     }
 
     public void removeVehicleFromCompactSpot() {
@@ -125,17 +136,6 @@ public class ParkingFloor {
 
     public void removeVehicleFromHandicapSpot() {
         handicapSpotOccupiedCount--;
-    }
-
-    public Boolean removeVehicleFromParkingSpot(final Vehicle vehicle) {
-
-        final ParkingSpot parkingSpot = vehicle.getParkingSpot();
-
-        vehicle.accept(vehicleDispatchVisior);
-
-        parkingSpot.unparkVehicle();
-
-        return null;
     }
 
     public void display() {

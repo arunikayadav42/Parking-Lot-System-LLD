@@ -11,11 +11,11 @@ public abstract class Vehicle {
 
     private ParkingSpot parkingSpot;
 
-    public abstract void accept(VehicleVisitor vehicleVisitor);
+    public abstract void accept(final VehicleVisitor vehicleVisitor);
 
-    public abstract void accept(VehicleDispatchVisior vehicleDispatchVisior);
+    public abstract void accept(final VehicleDispatchVisior vehicleDispatchVisior);
 
-    public void setParkingSpot(ParkingSpot parkingSpot) {
+    public void setParkingSpot(final ParkingSpot parkingSpot) {
         this.parkingSpot = parkingSpot;
     }
 

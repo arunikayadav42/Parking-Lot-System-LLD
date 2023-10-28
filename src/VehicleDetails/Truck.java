@@ -16,12 +16,12 @@ public class Truck extends Vehicle{
     }
 
     @Override
-    public void accept(VehicleVisitor vehicleVisitor) {
+    public void accept(final VehicleVisitor vehicleVisitor) {
         vehicleVisitor.visit(this);
     }
 
     @Override
-    public void accept(VehicleDispatchVisior vehicleDispatchVisior) {
+    public void accept(final VehicleDispatchVisior vehicleDispatchVisior) {
         vehicleDispatchVisior.visit(this);
     }
 
