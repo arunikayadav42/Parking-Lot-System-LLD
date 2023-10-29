@@ -1,11 +1,8 @@
 package ParkingFloor;
 
 import ParkingLotDetails.DisplayBoard;
-import ParkingSpotDetails.CompactSpotFactory;
-import ParkingSpotDetails.HandicapSpotFactory;
-import ParkingSpotDetails.LargeSpotFactory;
-import ParkingSpotDetails.MotorcycleSpotFactory;
 import ParkingSpotDetails.ParkingSpot;
+import ParkingSpotDetails.ParkingSpotFactory;
 import VehicleDetails.Vehicle;
 import VehicleDetails.VisitorPattern.VehicleDispatchVisitor;
 import VehicleDetails.VisitorPattern.VehicleDispatchVisitorImpl;
@@ -45,10 +42,10 @@ public class ParkingFloor {
         this.parkingFloorID = id;
         this.parkingFloorName = name;
         this.displayBoard = new DisplayBoard(this);
-        this.compactSpotList = new ArrayList<>(Collections.nCopies(TOTAL_COMPACT_SLOTS, new CompactSpotFactory().create()));
-        this.handicapSpotList = new ArrayList<>(Collections.nCopies(TOTAL_HANDICAP_SLOTS, new HandicapSpotFactory().create()));
-        this.largeSpotList = new ArrayList<>(Collections.nCopies(TOTAL_LARGE_SLOTS, new LargeSpotFactory().create()));
-        this.motorcycleSpotList = new ArrayList<>(Collections.nCopies(TOTAL_MOTORCYCLE_SLOTS, new MotorcycleSpotFactory().create()));
+        this.compactSpotList = new ArrayList<>(Collections.nCopies(TOTAL_COMPACT_SLOTS, ParkingSpotFactory.getParkingSpot("COMPACT")));
+        this.handicapSpotList = new ArrayList<>(Collections.nCopies(TOTAL_HANDICAP_SLOTS, ParkingSpotFactory.getParkingSpot("HANDICAP")));
+        this.largeSpotList = new ArrayList<>(Collections.nCopies(TOTAL_LARGE_SLOTS, ParkingSpotFactory.getParkingSpot("LARGE")));
+        this.motorcycleSpotList = new ArrayList<>(Collections.nCopies(TOTAL_MOTORCYCLE_SLOTS, ParkingSpotFactory.getParkingSpot("MOTORCYCLE")));
         compactSpotOccupiedCount = 0;
         handicapSpotOccupiedCount = 0;
         largeSpotOccupiedCount = 0;

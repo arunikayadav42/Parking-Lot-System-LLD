@@ -13,6 +13,11 @@ public class CompactSpot extends ParkingSpot{
     }
 
     @Override
+    protected ParkingSpot createParkingSpot(UUID uid) {
+        return new CompactSpot(uid);
+    }
+
+    @Override
     public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;

@@ -13,6 +13,11 @@ public class HandicapSpot extends ParkingSpot{
     }
 
     @Override
+    protected ParkingSpot createParkingSpot(UUID uid) {
+        return new HandicapSpot(uid);
+    }
+
+    @Override
     public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;

@@ -13,6 +13,11 @@ public class MotorcycleSpot extends ParkingSpot{
     }
 
     @Override
+    protected ParkingSpot createParkingSpot(UUID uid) {
+        return new MotorcycleSpot(uid);
+    }
+
+    @Override
     public boolean parkVehicle(final Vehicle incomingVehicle) {
         this.vehicle = incomingVehicle;
         return true;
